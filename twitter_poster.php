@@ -13,10 +13,8 @@ preg_match("/input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\"/"
 $authenticity_token=$authenticity_token[1];
 $bot->setUrl("https://mobile.twitter.com/session");
 $html=$bot->request("authenticity_token={$authenticity_token}&username=$user&password=$password");
-foreach($messages as $text) {
-        $bot->setUrl("https://mobile.twitter.com/");
-        $html=$bot->request("authenticity_token={$authenticity_token}&tweet[text]=$text&commit=Tweet");
-}
+$bot->setUrl("https://mobile.twitter.com/");
+$html=$bot->request("authenticity_token={$authenticity_token}&tweet[text]=$text&commit=Tweet");
 $bot->setUrl("https://mobile.twitter.com/session/destroy");
 $html=$bot->request("authenticity_token={$authenticity_token}&commit=Sign out");
 $bot->closeConnection();
