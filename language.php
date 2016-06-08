@@ -32,12 +32,11 @@ class lang {
 	}
 	public function get($string='', $args=array()) {
 		$layers = explode('.', $string);
-		$key = '$this->data';
+		$key = $this->data;
 		foreach($layers as $sub) {
-			$key .= '["'.$sub.'"]';
+			$key = $key[$sub];
 		}
-		$string = eval('return '.$key.';');
-		$return = $this->replace($string, $args);
+		$return = $this->replace($key, $args);
 		return $return;
 	}
 	public function replace($string='', $args=array()) {
@@ -50,12 +49,12 @@ class lang {
         {
           $expl[$i] = $args[$expl[$i]];
         }
-        elseif($i % 2 != 0)
+        elseif($i % 2 != 0) {
           $expl[$i] .= ':';
+        }
       }
       return implode('', $expl);
     }
-    else
-      return $string;
+    return $string;
 	}
 }
